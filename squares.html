@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+        var s1;
+        var num=prompt("Enter a number:\n","");
+        if(num!=null && num>0){
+            document.write("<h1> The squares of first "+num+" are: ");
+                    for(i=1;i<=num;i++){
+                        s1=s1+i+"^2="+i*i+"\n";
+                    }
+                    alert(s1);
+                }
+        else{
+            alert("Invalid input");
+        }
+    </script>
+</body>
+</html>
