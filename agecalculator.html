@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Form</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+    .error-message {
+      color: cyan;
+    }   
+  </style>
+</head>
+<body>
+<center>
+  <form id="signup-form">
+    <div>
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name" required><br>
+      <span id="name-error" class="error-message"></span>
+    </div>
+    <div>
+      <label for="dob">Date of Birth:</label><br>
+      <input type="date" id="dob" name="dob" required><br>
+      <span id="dob-error" class="error-message"></span>
+    </div>
+    <div id="age-field">
+      <label for="age">Age:</label><br>
+      <input type="range" id="age" name="age" min="18" max="100"><br>
+    </div>
+    <div>
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required><br>
+      <span id="email-error" class="error-message"></span>
+    </div>
+    <div>
+      <label for="website">Website:</label><br>
+      <input type="url" id="website" name="website"><br>
+    </div>
+    <button type="submit">Sign Up</button>
+  </form>
+</center>
+  <script>
+    const form = document.getElementById('signup-form');
+    const ageField = document.getElementById('age-field');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      if (validateForm()) {
+        alert('Form submitted successfully!');
+      }
+    });
+
+    function validateForm() {
+      let isValid = true;
+      const name = document.getElementById('name').value.trim();
+      const dob = document.getElementById('dob').value;
+      const email = document.getElementById('email').value.trim();
+
+      if (name === '') {
+        isValid = false;
+        document.getElementById('name-error').textContent = 'Please enter your name.';
+      } else {
+        document.getElementById('name-error').textContent = '';
+      }
+
+      if (dob === '') {
+        isValid = false;
+        document.getElementById('dob-error').textContent = 'Please enter your date of birth.';
+      } else {
+        document.getElementById('dob-error').textContent = '';
+      }
+
+      if (email === '') {
+        isValid = false;
+        document.getElementById('email-error').textContent = 'Please enter your email.';
+      } else {
+        document.getElementById('email-error').textContent = '';
+      }
+
+      return isValid;
+    }
+
+    function calculateAge(dateString) {
+      const today = new Date();
+      const birthDate = new Date(dateString);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const month = today.getMonth() - birthDate.getMonth();
+
+      if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      return age;
+    }
+
+    document.getElementById('dob').addEventListener('change', function() {
+      const age = calculateAge(this.value);
+      if (age < 18) {
+        ageField.classList.add('hidden');
+      } else {
+        ageField.classList.remove('hidden');
+      }
+    });
+
+    window.onload = function() {
+      const age = calculateAge(document.getElementById('dob').value);
+      if (age < 18 || age >= 18 && age <= 25) {
+        ageField.classList.add('hidden');
+      }
+    };
+  </script>
+</body>
+</html>
