@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  canvas {
+    border: 1px solid rgb(0, 0, 0);
+  }
+</style>
+<script>
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  function startDrawing(event) {
+    isDrawing = true;
+    lastX = event.clientX;
+    lastY = event.clientY;
+  }
+
+  function finishDrawing() {
+    isDrawing = false;
+  }
+
+  function draw(event) {
+    if (!isDrawing) return;
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(event.clientX, event.clientY);
+    ctx.stroke();
+
+    lastX = event.clientX;
+    lastY = event.clientY;
+  }
+</script>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600" onmousedown="startDrawing(event)" onmousemove="draw(event)" onmouseup="finishDrawing()"></canvas>
+</body>
+</html>
